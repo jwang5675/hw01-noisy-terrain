@@ -11,15 +11,24 @@ References:
 Demo: https://jwang5675.github.io/hw01-noisy-terrain/
 
 ## Noise Functions
-There are 4 variations of noise functions used in this procedural terrain.
-
-- Worley Noise: This noise is used to make the biomes of the scene. Worley noise is used to increase the height threshold such that things near the center of the Worley Noise within a grid are made into larger mountain peaks while the areas away from the centers are made into lakes. 
+There are 4 variations of noise functions used in this procedural terrain. 
 
 - Fractal Brownian Motion: This noise is used to create the mountains of the scene with a smooth heightfield.
 
+![](images/fbm.jpg)
+
 - Exponential Noise Redistribution: This noise is used to add edges and small peaks within the mountains with a heightfield. This adds details to the mountains to prevent it from looking like smooth lumps. 
 
+![](images/fbm+redistribution.jpg)
+
 - Perlin Noise: This noise is used to add terrain attributes to the scene. Specifically, the noise is used to add coloring details within the fragment shader to the snowy mountain and forest regions. The color of the mountains is defined by a height field interpolated between different moisture layers. Perlin noise is then added to the mountain as color to give the mountains an effect of snowy cliff rocks and trees within forest and snowy peak regions. The Perlin noise is average with the pixels around it and smoothed with linear interpolation between the Perlin noise and the original moisture color of the biome.
+
+
+![](images/fbm+redistribution+perlin.jpg)
+
+- Worley Noise: This noise is used to make the biomes of the scene. Worley noise is used to increase the height threshold such that things near the center of the Worley Noise within a grid are made into larger mountain peaks while the areas away from the centers are made into lakes.
+
+![](images/fbm+redistribution+perlin+worley.jpg)
 
 ## GUI Elements
 There are two added GUI Elements.
