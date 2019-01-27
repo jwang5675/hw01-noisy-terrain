@@ -1,6 +1,8 @@
 # CIS 566 Homework 1: Noisy Terrain
 Jason Wang (jasonwa)
 
+![](images/fbm+redistribution+perlin+worley.jpg)
+
 References: 
   - Biome Motivation: https://www.gnome-look.org/p/1154368/ 
   - http://thebookofshaders.com/10/
