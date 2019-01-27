@@ -1,103 +1,26 @@
 # CIS 566 Homework 1: Noisy Terrain
+Jason Wang (jasonwa)
 
-## Objective
-- Continue practicing WebGL and Typescript
-- Experiment with noise functions to procedurally generate the surface of a planet
+References: 
+  - Biome Motivation: https://www.gnome-look.org/p/1154368/ 
+  - Noise Function References: http://thebookofshaders.com/10/, http://thebookofshaders.com/11/, http://thebookofshaders.com/12/, http://thebookofshaders.com/13/
 
-## Base Code
-The code we have provided for this assignment features the following:
-- A subdivided plane rendered with a shader that deforms it with a sine curve
-and applies a blue distance fog to it to blend it into the background. This
-shader also provides a few noise functions that include "seed" input; this
-value lets you offset the input vec2 by some constant value so that you can
-get two different noise values for the same input position.
-- A movable camera like the one provided with homework 0
-- A keyboard input listener that, at present, listens for the WASD keys
-and updates a `vec2` in the plane shader representing a 2D position
-- A square that spans the range [-1, 1] in X and Y that is rendered with a
-shader that does not apply a projection matrix to it, thus rendering it as the
-"background" of your scene
+Demo: https://jwang5675.github.io/hw01-noisy-terrain/
 
-When you run the program, you should see this scene:
-![](startScene.png)
+## Noise Functions
+There are 4 variations of noise functions used in this procedural terrain.
 
-## Assignment Requirements
-- __(75 points)__ Modify the provided terrain shader so that it incorporates various noise
-functions and noise function permutations to deform the surface and
-modify the color of the subdivided plane to give it the appearance of
-various geographic features. Your terrain should incorporate at least three
-different types of noise (different permutations count as different types).
-Here are some suggestions for how to use noise to generate these features:
-  - Create a height field based on summed fractal noise
-  - Adjust the distribution of noise values so they are biased to various height
-  values, or even radically remap height values entirely!
-  ![](distributionGraphs.png)
-  - Use noise functions on a broad scale to compute different terrain attributes:
-    - Temperature
-    - Moisture
-    - Rainfall
-    - Population
-    - Mysticality
-    - Volcanic activity
-    - Urbanization
-    - Storm intensity
-    - Fog density (perhaps add some procedurally textured planes hovering above
-      the ground)
-    - Faction control in the war between the Ponies of Equestria and Manatees
-    of Atlantis
-  - Use the above attributes to drive visual features such as terrain height
-  distribution, terrain color, water placement, noise type used to deform
-  terrain, etc.
-  - If you think of your terrain attributes as forming an N-dimensional space,
-  you can carve out zones within that space for different kinds of environments
-  and biomes, interpolating between the different kinds when you reach the
-  boundary of a biome.
-  - Your terrain doesn't have to be Earth-like; create any kind of outlandish
-  environment you wish to!
+- Worley Noise: This noise is used to make the biomes of the scene. Worley noise is used to increase the height threshold such that things near the center of the Worley Noise within a grid are made into larger mountain peaks while the areas away from the centers are made into lakes. 
 
+- Fractal Brownian Motion: This noise is used to create the mountains of the scene with a smooth heightfield.
 
-- __(15 points)__ Add GUI elements via dat.GUI that allow the user to modify different
-attributes of your terrain generator. For example, you could modify the scale
-of certain noise functions to grow and shrink biome placement, or adjust the
-age of your world to alter things like sea level and mountain height. You could
-also modify the time of day of your scene through the GUI. Whichever elements
-you choose to make controllable, you should have at least two modifiable
-features.
+- Exponential Noise Redistribution: This noise is used to add edges and small peaks within the mountains with a heightfield. This adds details to the mountains to prevent it from looking like smooth lumps. 
 
+- Perlin Noise: This noise is used to add terrain attributes to the scene. Specifically, the noise is used to add coloring details within the fragment shader to the snowy mountain and forest regions. The color of the mountains is defined by a height field interpolated between different moisture layers. Perlin noise is then added to the mountain as color to give the mountains an effect of snowy cliff rocks and trees within forest and snowy peak regions. The Perlin noise is average with the pixels around it and smoothed with linear interpolation between the Perlin noise and the original moisture color of the biome.
 
-- __(10 points)__ Following the specifications listed
-[here](https://github.com/pjcozzi/Articles/blob/master/CIS565/GitHubRepo/README.md),
-create your own README.md, renaming this file to INSTRUCTIONS.md. Don't worry
-about discussing runtime optimization for this project. Make sure your
-README contains the following information:
-  - Your name and PennKey
-  - Citation of any external resources you found helpful when implementing this
-  assignment.
-  - A link to your live github.io demo (refer to the pinned Piazza post on
-    how to make a live demo through github.io)
-  - An explanation of the techniques you used to generate your planet features.
-  Please be as detailed as you can; not only will this help you explain your work
-  to recruiters, but it helps us understand your project when we grade it!
+## GUI Elements
+There are two added GUI Elements.
 
-## Useful Links
-- [Implicit Procedural Planet Generation](https://static1.squarespace.com/static/58a1bc3c3e00be6bfe6c228c/t/58a4d25146c3c4233fb15cc2/1487196929690/ImplicitProceduralPlanetGeneration-Report.pdf)
-- [Curl Noise](https://petewerner.blogspot.com/2015/02/intro-to-curl-noise.html)
-- [GPU Gems Chapter on Perlin Noise](http://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch05.html)
-- [Worley Noise Implementations](https://thebookofshaders.com/12/)
+- Height: This increases the height field of the environment. Increasing the height creates more mountain regions and decreases the amount of water biome regions. Decreasing the height field does the opposite: it creates fewer high mountains and adds more water biome regions.
 
-
-## Submission
-Commit and push to Github, then submit a link to your commit on Canvas. Remember
-to make your own README!
-
-## Extra Credit (20 points maximum)
-- __(5 - 20 pts)__ Modify the flat shader to create a procedural background for
-your scene. Add clouds, a sun (or suns!), stars, a moon, sentient nebulae,
-whatever tickles your fancy! The more interesting your sky, the more points
-you'll earn!
-- __(5 - 10 pts)__ Use a 4D noise function to modify the terrain over time, where time is the
-fourth dimension that is updated each frame. A 3D function will work, too, but
-the change in noise will look more "directional" than if you use 4D.
-- __(10 - 20 pts)__ Create your own mesh objects and procedurally place them
-in your environment according to terrain type, e.g. trees, buildings, animals.
-- __(? pts)__ Propose an extra feature of your own!
+- Biome Distance: This increases the size of each biome. As the biome distance increases/decreases, this increases/decreases the size of the grid used by Worley noise in determining biomes. Thus, it increases/decreases the distances between mountain and water biome regions.
