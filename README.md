@@ -3,7 +3,10 @@ Jason Wang (jasonwa)
 
 References: 
   - Biome Motivation: https://www.gnome-look.org/p/1154368/ 
-  - Noise Function References: http://thebookofshaders.com/10/, http://thebookofshaders.com/11/, http://thebookofshaders.com/12/, http://thebookofshaders.com/13/
+  - http://thebookofshaders.com/10/
+  - http://thebookofshaders.com/11/
+  - http://thebookofshaders.com/12/
+  - http://thebookofshaders.com/13/
 
 Demo: https://jwang5675.github.io/hw01-noisy-terrain/
 
