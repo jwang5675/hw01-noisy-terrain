@@ -12,6 +12,8 @@ import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 // This will be referred to by dat.GUI's functions that add GUI elements.
 const controls = {
   tesselations: 5,
+  height: 0.5,
+  'Biome Distance': 0.5,
   'Load Scene': loadScene, // A function pointer, essentially
 };
 
@@ -22,6 +24,7 @@ let aPressed: boolean;
 let sPressed: boolean;
 let dPressed: boolean;
 let planePos: vec2;
+let startTime: number = Date.now();
 
 function loadScene() {
   square = new Square(vec3.fromValues(0, 0, 0));
@@ -82,6 +85,8 @@ function main() {
 
   // Add controls to the gui
   const gui = new DAT.GUI();
+  gui.add(controls, 'height', -1.5, 2.5).step(0.05);
+  gui.add(controls, 'Biome Distance', 0, 1.0).step(0.05);
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -137,6 +142,12 @@ function main() {
     camera.update();
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
+
+    lambert.setHeight(controls.height);
+    lambert.setBiome(controls['Biome Distance']);
+    flat.setTime(Date.now() - startTime);
+    flat.setDimensions(vec2.fromValues(window.innerWidth, window.innerHeight));
+
     renderer.clear();
     processKeyPresses();
     renderer.render(camera, lambert, [

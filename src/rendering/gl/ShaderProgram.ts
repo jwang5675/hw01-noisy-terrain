@@ -30,6 +30,10 @@ class ShaderProgram {
   unifViewProj: WebGLUniformLocation;
   unifColor: WebGLUniformLocation;
   unifPlanePos: WebGLUniformLocation;
+  unifHeightMultiplier: WebGLUniformLocation;
+  unifBiomeMultiplier: WebGLUniformLocation;
+  unifTime: WebGLUniformLocation;
+  unifDimensions: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -49,6 +53,10 @@ class ShaderProgram {
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj   = gl.getUniformLocation(this.prog, "u_ViewProj");
     this.unifPlanePos   = gl.getUniformLocation(this.prog, "u_PlanePos");
+    this.unifHeightMultiplier = gl.getUniformLocation(this.prog, "u_HeightScale");
+    this.unifBiomeMultiplier = gl.getUniformLocation(this.prog, "u_BiomeScale");
+    this.unifTime = gl.getUniformLocation(this.prog, "u_Time");
+    this.unifDimensions = gl.getUniformLocation(this.prog, "u_Dimensions");
   }
 
   use() {
@@ -83,6 +91,34 @@ class ShaderProgram {
     this.use();
     if (this.unifPlanePos !== -1) {
       gl.uniform2fv(this.unifPlanePos, pos);
+    }
+  }
+
+  setHeight(height: number) {
+    this.use();
+    if (this.unifHeightMultiplier !== -1) {
+      gl.uniform1f(this.unifHeightMultiplier, height);
+    }
+  }
+
+  setBiome(height: number) {
+    this.use();
+    if (this.unifBiomeMultiplier !== -1) {
+      gl.uniform1f(this.unifBiomeMultiplier, height);
+    }
+  }
+
+  setTime(time: number) {
+    this.use();
+    if (this.unifTime !== -1) {
+      gl.uniform1f(this.unifTime, time);
+    }
+  }
+
+  setDimensions(dim: vec2) {
+    this.use();
+    if (this.unifDimensions !== -1) {
+      gl.uniform2fv(this.unifDimensions, dim);
     }
   }
 

@@ -5,6 +5,8 @@ uniform mat4 u_Model;
 uniform mat4 u_ModelInvTr;
 uniform mat4 u_ViewProj;
 uniform vec2 u_PlanePos; // Our location in the virtual world displayed by the plane
+uniform float u_HeightScale;
+uniform float u_BiomeScale;
 
 in vec4 vs_Pos;
 in vec4 vs_Nor;
@@ -87,7 +89,7 @@ void main()
 {
   vec2 point = vs_Pos.xz + u_PlanePos;
 
-  float height = 0.33 * getRedistributionNoise(point, 0.54) + 3.0 * fbm(point) + getWorlyHeight(point, 20.0) + 0.5;
+  float height = 0.33 * getRedistributionNoise(point, 0.54) + 3.0 * fbm(point) + getWorlyHeight(point, u_BiomeScale * 40.0) + u_HeightScale;
   height = max(3.2, height);
   
   vec4 modelposition = vec4(vs_Pos.x, height, vs_Pos.z, 1.0);
