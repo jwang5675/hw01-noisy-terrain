@@ -37,4 +37,8 @@ There are two added GUI Elements.
 
 - Height: This increases the height field of the environment. Increasing the height creates more mountain regions and decreases the amount of water biome regions. Decreasing the height field does the opposite: it creates fewer high mountains and adds more water biome regions.
 
+![](images/height.mp4)
+
 - Biome Distance: This increases the size of each biome. As the biome distance increases/decreases, this increases/decreases the size of the grid used by Worley noise in determining biomes. Thus, it increases/decreases the distances between mountain and water biome regions.
+
+![](images/biome.mp4)
