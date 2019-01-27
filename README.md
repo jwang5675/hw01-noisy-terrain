@@ -1,6 +1,8 @@
 # CIS 566 Homework 1: Noisy Terrain
 Jason Wang (jasonwa)
 
+Demo: https://jwang5675.github.io/hw01-noisy-terrain/
+
 ![](images/fbm+redistribution+perlin+worley.jpg)
 
 References: 
@@ -9,8 +11,6 @@ References:
   - http://thebookofshaders.com/11/
   - http://thebookofshaders.com/12/
   - http://thebookofshaders.com/13/
-
-Demo: https://jwang5675.github.io/hw01-noisy-terrain/
 
 ## Noise Functions
 There are 4 variations of noise functions used in this procedural terrain. 
